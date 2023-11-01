@@ -6,6 +6,8 @@
 #include <string.h>
 
 #define FIND_MAX(a, b) ((a > b) ? a : b)
+#define LEFT 0
+#define RIGHT 0
 
 /**
  * enum Root_SWITCH - Short description
@@ -47,7 +49,7 @@ void binary_tree_preorder(const binary_tree_t *tree, void (*func)(int));
 void binary_tree_inorder(const binary_tree_t *tree, void (*func)(int));
 void binary_tree_print(const binary_tree_t *tree);
 void binary_tree_postorder(const binary_tree_t *tree, void (*func)(int));
-size_t binary_tree_height(const binary_tree_t *tree);
+size_t find_height(const binary_tree_t *tree);
 size_t binary_tree_depth(const binary_tree_t *tree);
 size_t binary_tree_size(const binary_tree_t *tree);
 size_t binary_tree_leaves(const binary_tree_t *tree);
@@ -61,5 +63,6 @@ binary_tree_t *binary_tree_uncle(binary_tree_t *node);
 
 binary_tree_t *binary_tree_rotate_left(binary_tree_t *tree);
 binary_tree_t *binary_tree_rotate_right(binary_tree_t *tree);
+int binary_tree_is_avl(const binary_tree_t *tree);
 
 #endif

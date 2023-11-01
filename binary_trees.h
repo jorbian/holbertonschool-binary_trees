@@ -5,7 +5,19 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define FIND_MAX(a,b) ((a > b) ? a : b)
+#define FIND_MAX(a, b) ((a > b) ? a : b)
+
+/**
+ * enum Root_SWITCH - Short description
+ * @new: the new root
+ * @b: the old root
+ *
+ * Description: Longer description
+ */
+enum Root_SWITCH
+{
+	NEW, OLD
+};
 
 /**
  * struct binary_tree_s - Binary tree node
@@ -17,10 +29,10 @@
  */
 struct binary_tree_s
 {
-    int n;
-    struct binary_tree_s *parent;
-    struct binary_tree_s *left;
-    struct binary_tree_s *right;
+	int n;
+	struct binary_tree_s *parent;
+	struct binary_tree_s *left;
+	struct binary_tree_s *right;
 };
 
 typedef struct binary_tree_s binary_tree_t;

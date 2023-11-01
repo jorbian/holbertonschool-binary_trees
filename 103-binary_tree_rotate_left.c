@@ -1,9 +1,5 @@
 #include "binary_trees.h"
 
-enum Roots
-{
-	NEW, OLD
-};
 /**
  * binary_tree_rotate_left - Rotates a binary search tree clockwise
  * @tree: The binary search tree to rotate

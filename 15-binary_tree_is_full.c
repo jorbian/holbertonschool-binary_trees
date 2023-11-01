@@ -4,7 +4,7 @@
  * is_full - Check if binary tree is full recursively.
  * @tree: Pointer to the root node of the tree to check.
  *
- * Return: asdf 
+ * Return: asdf
  */
 int is_full(const binary_tree_t *tree)
 {

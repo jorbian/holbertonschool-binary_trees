@@ -2,3 +2,5 @@
 .DS_Store
 *-main.c
 **/test/**
+**/*.py
+**/*.sh

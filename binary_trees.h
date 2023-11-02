@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <limits.h>
 
 #define FIND_MAX(a, b) ((a > b) ? a : b)
 #define LEFT 0
@@ -64,5 +65,6 @@ binary_tree_t *binary_tree_uncle(binary_tree_t *node);
 binary_tree_t *binary_tree_rotate_left(binary_tree_t *tree);
 binary_tree_t *binary_tree_rotate_right(binary_tree_t *tree);
 int binary_tree_is_avl(const binary_tree_t *tree);
+int binary_tree_is_bst(binary_tree_t *tree);
 
 #endif

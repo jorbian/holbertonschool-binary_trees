@@ -4,7 +4,7 @@
  * find_ancestor - asdf
  * @node: asdf
  * @gens_back: asdf
- * 
+ *
  * Return: asdf
 */
 static binary_tree_t *find_ancestor(binary_tree_t *node, int gens_back)

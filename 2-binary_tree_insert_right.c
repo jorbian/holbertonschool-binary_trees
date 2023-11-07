@@ -55,7 +55,7 @@ static binary_tree_t *insert_node(
 */
 binary_tree_t *binary_tree_insert_right(binary_tree_t *parent, int value)
 {
-	if (parent == NULL)
+	if (parent == NULL || parent->right != NULL)
 		return (NULL);
 
 	return (insert_node(parent, value, get_right));

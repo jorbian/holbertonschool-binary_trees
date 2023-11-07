@@ -1,8 +1,15 @@
 #include "binary_trees.h"
 
-binary_tree_t *binary_tree_insert_left(binary_tree_t *parent, int value)
+static binary_tree_t **get_left(binary_tree_t *node)
+{
+	return (&(node->left));
+}
+
+
+static binary_tree_t *insert_node(binary_tree_t *parent, int value, binary_tree_t **(*get_side)(binary_tree_t *))
 {
 	binary_tree_t *new;
+	binary_tree_t **parent_side;
 
 	if (parent == NULL)
 		return (NULL);
@@ -11,12 +18,21 @@ binary_tree_t *binary_tree_insert_left(binary_tree_t *parent, int value)
 	if (new == NULL)
 		return (NULL);
 
-	if (parent->left != NULL)
+	parent_side = get_side(parent);
+
+	if (*parent_side != NULL)
 	{
-		new->left = parent->left;
-		parent->left->parent = new;
+		(*parent_side)->parent = new;
 	}
-	parent->left = new;
+	parent_side = &new;
 
 	return (new);
+}
+
+binary_tree_t *binary_tree_insert_left(binary_tree_t *parent, int value)
+{
+	if (parent == NULL)
+		return (NULL);
+
+	return (insert_node(parent, value, get_left));
 }

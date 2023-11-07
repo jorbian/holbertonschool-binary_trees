@@ -6,7 +6,7 @@
  *
  * Return: Tree is NULL, function returns 0, else returns the height.
  */
-size_t binary_tree_height(const binary_tree_t *tree)
+static int binary_tree_height(const binary_tree_t *tree)
 {
 	size_t counters[2];
 																										
@@ -27,21 +27,18 @@ size_t binary_tree_height(const binary_tree_t *tree)
  *
  * Return: 1 if tree is a valid AVL Tree, and 0 otherwise
  */
-int binary_tree_is_avl(const binary_tree_t *tree)
+bool binary_tree_is_avl(const binary_tree_t *tree)
 {
-	int counters[2];
-
 	if (tree == NULL)
-		return (0);
-
-	counters[LEFT] = binary_tree_height(tree->left);
-	counters[RIGHT] = binary_tree_height(tree->right);
+		return (false);
 
 	if(
-		(abs(counters[LEFT] - counters[RIGHT]) <= 1) &&
+		(abs(
+			(binary_tree_height(tree->left)) - (binary_tree_height(tree->right)
+		)) <= 1) &&
 		(binary_tree_is_avl(tree->left) && binary_tree_is_avl(tree->right))
 	)
-		return (1);
+		return (true);
 
-   return (0);
+   return (false);
 }

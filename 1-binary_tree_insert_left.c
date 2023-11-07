@@ -38,7 +38,7 @@ static binary_tree_t *insert_node(
 	parent_side = *get_side(parent);
 	new_side = *get_side(new);
 
-	if (new_side  != NULL)
+	if (new_side != NULL)
 	{
 		new_side = parent_side;
 		parent_side->parent = new;

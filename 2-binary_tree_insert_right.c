@@ -40,10 +40,10 @@ static binary_tree_t *insert_node(
 
 	if (new_side  != NULL)
 	{
-		new_side = parent_side;
-		parent_side->parent = new;
+		*new_side = *parent_side;
+		*parent_side->parent = *new;
 	}
-	parent_side = new;
+	*parent_side = *new;
 
 	return (new);
 }

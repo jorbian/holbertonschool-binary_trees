@@ -12,7 +12,7 @@ static binary_tree_t **get_right(binary_tree_t *node)
 }
 
 /**
- * insert_node - insert a node on the right or the right slot of the parent
+ * insert_node - insert a node on the left or the right slot of the parent
  * @parent: the parent node being added to
  * @value: the value that will be stored in the new node.
  * @get_side: function pointer to the function that will dereference
@@ -25,8 +25,8 @@ static binary_tree_t *insert_node(
 	binary_tree_t **(*get_side)(binary_tree_t *)
 )
 {
-	binary_tree_t *new, *temp;
-	binary_tree_t **parent_side;
+	binary_tree_t *new;
+	binary_tree_t *parent_side, *new_side;
 
 	if (parent == NULL)
 		return (NULL);
@@ -35,13 +35,15 @@ static binary_tree_t *insert_node(
 	if (new == NULL)
 		return (NULL);
 
-	parent_side = get_side(parent);
-	temp = *parent_side;
+	parent_side = *get_side(parent);
+	new_side = *get_side(new);
 
-	if (temp != NULL)
-		temp->parent = new;
-
-	*parent_side = new;
+	if (new_side  != NULL)
+	{
+		new_side = parent_side;
+		parent_side->parent = new;
+	}
+	parent_side = new;
 
 	return (new);
 }

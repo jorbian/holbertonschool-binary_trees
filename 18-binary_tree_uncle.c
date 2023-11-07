@@ -1,11 +1,11 @@
 #include "binary_trees.h"
 
 /**
- * find_ancestor - asdf
- * @node: asdf
- * @gens_back: asdf
+ * find_ancestor - find a previous node somewhere up the tree
+ * @node: node to start at.
+ * @gens_back: How many generations to move up.
  *
- * Return: asdf
+ * Return: Pointer to the node however many generations back.
 */
 static binary_tree_t *find_ancestor(binary_tree_t *node, int gens_back)
 {

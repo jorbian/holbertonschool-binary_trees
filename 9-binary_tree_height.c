@@ -6,15 +6,19 @@
  * @l: place to store the height down the left
  * @r: place to store the height down the right
 */
-static void measure_branches(const binary_tree_t *t, int *l, int *r)
+static void measure_branches(const binary_tree_t *tree, int *counters)
 {
-	*l = t->left ? 1 + binary_tree_height(t->left) : 0;
-	*r = t->right ? 1 + binary_tree_height(t->right) : 0;
+	counters[LEFT] = (
+		(tree->left) ? 1 + binary_tree_height(tree->left) : 0
+	);
+	counters[RIGHT] = (
+		(tree->right) ? 1 + binary_tree_height(tree->right) : 0
+	);
 }
 
 /**
- * binary_tree_height - Measures the height of a binary tree.
- * @tree: Pointer to the root node to measure the height.
+ * binary_tree_height - Measures the height of binary tree.
+ * @tree: Pointer to root node to measure the height.
  *
  * Return: Tree is NULL, function returns 0, else returns the height.
  */
@@ -25,7 +29,7 @@ int binary_tree_height(const binary_tree_t *tree)
 	if (tree == NULL)
 		return (0);
 
-	measure_branches(tree, &counters[LEFT], &counters[RIGHT]);
+	measure_branches(tree, (int *)&counters);
 
 	return (
 		(counters[LEFT] > counters[RIGHT]) ? counters[LEFT] : counters[RIGHT]

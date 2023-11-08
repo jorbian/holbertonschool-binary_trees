@@ -30,7 +30,5 @@ size_t binary_tree_height(const binary_tree_t *tree)
 
 	measure_branches(tree, (size_t *)&counters);
 
-	return (
-		(counters[LEFT] > counters[RIGHT]) ? counters[LEFT] : counters[RIGHT]
-	);
+	return (MAX(counters[LEFT], counters[RIGHT]));
 }

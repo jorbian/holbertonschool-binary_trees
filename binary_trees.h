@@ -7,9 +7,9 @@
 #include <limits.h>
 #include <stdbool.h>
 
-#define FIND_MAX(a, b) ((a > b) ? a : b)
+#define MAX(x, y)  (x - ((x - y) & -(x < y)))
 #define LEFT 0
-#define RIGHT 0
+#define RIGHT 1
 
 /**
  * enum Root_SWITCH - Short description

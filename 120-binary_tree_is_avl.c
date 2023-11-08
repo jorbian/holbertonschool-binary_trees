@@ -1,6 +1,6 @@
 #include "binary_trees.h"
 
-static int get_height(const binary_tree_t *tree);
+#define NODE_EXISTS(n) ((n) ? 1 + binary_tree_height(n) : 0)
 
 /**
  * measure_branches - measure the subbranches of the tree
@@ -9,32 +9,8 @@ static int get_height(const binary_tree_t *tree);
 */
 static void measure_branches(const binary_tree_t *tree, int *counters)
 {
-	counters[LEFT] = (
-		(tree->left) ? 1 + get_height(tree->left) : 0
-	);
-	counters[RIGHT] = (
-		(tree->right) ? 1 + get_height(tree->right) : 0
-	);
-}
-
-/**
- * get_height - Measures the height of binary tree.
- * @tree: Pointer to root node to measure the height.
- *
- * Return: Tree is NULL, function returns 0, else returns the height.
- */
-static int get_height(const binary_tree_t *tree)
-{
-	int counters[2];
-
-	if (tree == NULL)
-		return (0);
-
-	measure_branches(tree, (int *)&counters);
-
-	return (
-		MAX(counters[LEFT], counters[RIGHT])
-	);
+	counters[LEFT] = NODE_EXISTS(tree->left);
+	counters[RIGHT] = NODE_EXISTS(tree->right);
 }
 
 /**
@@ -48,7 +24,10 @@ static bool is_balanced(const binary_tree_t *tree)
 	if (tree == NULL)
 		return (true);
 	else if (
-		abs(get_height(tree->left) - get_height(tree->right)) > 1
+		LR_BALANCE(
+			binary_tree_height(tree->left),
+			binary_tree_height(tree->right)
+		)
 	)
 		return (false);
 	else
@@ -76,7 +55,7 @@ static int validate_avl(const binary_tree_t *tree, int lowest, int highest)
 
 		measure_branches(tree, (int *)&height);
 
-		if (abs(height[LEFT] - height[RIGHT]) > 1)
+		if (LR_BALANCE(height[LEFT], height[RIGHT]))
 			return (0);
 		else
 			return (
@@ -86,6 +65,26 @@ static int validate_avl(const binary_tree_t *tree, int lowest, int highest)
 			);
 	}
 	return (1);
+}
+
+/**
+ * binary_tree_height - Measures the height of binary tree.
+ * @tree: Pointer to root node to measure the height.
+ *
+ * Return: Tree is NULL, function returns 0, else returns the height.
+ */
+int binary_tree_height(const binary_tree_t *tree)
+{
+	int counters[2];
+
+	if (tree == NULL)
+		return (0);
+
+	measure_branches(tree, (int *)&counters);
+
+	return (
+		MAX(counters[LEFT], counters[RIGHT])
+	);
 }
 
 /**

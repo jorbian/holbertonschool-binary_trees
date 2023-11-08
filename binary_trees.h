@@ -8,6 +8,8 @@
 #include <stdbool.h>
 
 #define MAX(x, y)  (x - ((x - y) & -(x < y)))
+#define BALANCE_F(l, r) (abs(l - r))
+#define LR_BALANCE(l, r) (BALANCE_F(l, r) > 1)
 #define LEFT 0
 #define RIGHT 1
 
@@ -51,7 +53,7 @@ void binary_tree_preorder(const binary_tree_t *tree, void (*func)(int));
 void binary_tree_inorder(const binary_tree_t *tree, void (*func)(int));
 void binary_tree_print(const binary_tree_t *tree);
 void binary_tree_postorder(const binary_tree_t *tree, void (*func)(int));
-size_t binary_tree_height(const binary_tree_t *tree);
+int binary_tree_height(const binary_tree_t *tree);
 size_t binary_tree_depth(const binary_tree_t *tree);
 size_t binary_tree_size(const binary_tree_t *tree);
 size_t binary_tree_leaves(binary_tree_t *tree);

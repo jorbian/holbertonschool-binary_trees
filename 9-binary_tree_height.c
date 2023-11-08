@@ -5,7 +5,7 @@
  * @tree: node of the root or sub-root of the tree
  * @counters: pointer to counter array
 */
-static void measure_branches(const binary_tree_t *tree, size_t *counters)
+static void measure_branches(const binary_tree_t *tree, int *counters)
 {
 	counters[LEFT] = (
 		(tree->left) ? 1 + binary_tree_height(tree->left) : 0
@@ -21,9 +21,9 @@ static void measure_branches(const binary_tree_t *tree, size_t *counters)
  *
  * Return: Tree is NULL, function returns 0, else returns the height.
  */
-size_t binary_tree_height(const binary_tree_t *tree)
+int binary_tree_height(const binary_tree_t *tree)
 {
-	size_t counters[2];
+	int counters[2];
 
 	if (tree == NULL)
 		return (0);

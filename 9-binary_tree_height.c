@@ -1,5 +1,7 @@
 #include "binary_trees.h"
 
+#define NODE_EXISTS(n) ((n) ? 1 + binary_tree_height(n) : 0)
+
 /**
  * measure_branches - measure the subbranches of the tree
  * @tree: node of the root or sub-root of the tree
@@ -7,12 +9,8 @@
 */
 static void measure_branches(const binary_tree_t *tree, int *counters)
 {
-	counters[LEFT] = (
-		(tree->left) ? 1 + binary_tree_height(tree->left) : 0
-	);
-	counters[RIGHT] = (
-		(tree->right) ? 1 + binary_tree_height(tree->right) : 0
-	);
+	counters[LEFT] = NODE_EXISTS(tree->left);
+	counters[RIGHT] = NODE_EXISTS(tree->right);
 }
 
 /**
@@ -28,7 +26,9 @@ int binary_tree_height(const binary_tree_t *tree)
 	if (tree == NULL)
 		return (0);
 
-	measure_branches(tree, (size_t *)&counters);
+	measure_branches(tree, (int *)&counters);
 
-	return (MAX(counters[LEFT], counters[RIGHT]));
+	return (
+		MAX(counters[LEFT], counters[RIGHT])
+	);
 }

@@ -1,5 +1,38 @@
 #include "binary_trees.h"
 
+#define NODE_EXISTS(n) ((n) ? 1 + binary_tree_height(n) : 0)
+
+/**
+ * measure_branches - measure the subbranches of the tree
+ * @tree: node of the root or sub-root of the tree
+ * @counters: pointer to counter array
+*/
+static void measure_branches(const binary_tree_t *tree, int *counters)
+{
+	counters[LEFT] = NODE_EXISTS(tree->left);
+	counters[RIGHT] = NODE_EXISTS(tree->right);
+}
+
+/**
+ * binary_tree_height - Measures the height of binary tree.
+ * @tree: Pointer to root node to measure the height.
+ *
+ * Return: Tree is NULL, function returns 0, else returns the height.
+ */
+int binary_tree_height(const binary_tree_t *tree)
+{
+	int counters[2];
+
+	if (tree == NULL)
+		return (0);
+
+	measure_branches(tree, (int *)&counters);
+
+	return (
+		MAX(counters[LEFT], counters[RIGHT])
+	);
+}
+
 /**
  * binary_tree_balance - Measure balance factor of binary tree.
  * @tree: A pointer to the root node of the tree to measure the balance factor.
@@ -12,27 +45,6 @@ int binary_tree_balance(const binary_tree_t *tree)
 		return (0);
 
 	return (
-		find_height(tree->left) - find_height(tree->right)
-	);
-}
-
-/**
- * find_height - Measures the height of a binary tree.
- * @tree: Pointer to the root node to measure the height.
- *
- * Return: Tree is NULL, function returns 0, else returns the height.
- */
-static size_t find_height(const binary_tree_t *tree)
-{
-	size_t counters[2];
-
-	if (tree == NULL)
-		return (0);
-
-	counters[LEFT] = tree->left ? 1 + find_height(tree->left) : 0;
-	counters[RIGHT] = tree->right ? 1 + find_height(tree->right) : 0;
-
-	return (
-		(counters[LEFT] > counters[RIGHT]) ? counters[LEFT] : counters[RIGHT]
+		binary_tree_height(tree->left) - binary_tree_height(tree->right)
 	);
 }

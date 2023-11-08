@@ -41,6 +41,8 @@ typedef struct binary_tree_s
 	struct binary_tree_s *right;
 } binary_tree_t;
 
+typedef struct binary_tree_s bst_t;
+typedef struct binary_tree_s avl_t;
 typedef struct binary_tree_s btree_t;
 
 binary_tree_t *binary_tree_node(binary_tree_t *parent, int value);
@@ -68,5 +70,6 @@ binary_tree_t *binary_tree_rotate_right(binary_tree_t *tree);
 bool binary_tree_is_avl(const binary_tree_t *tree);
 int binary_tree_is_bst(binary_tree_t *tree);
 binary_tree_t *bst_insert(binary_tree_t **tree, int value);
+avl_t *avl_insert(avl_t **tree, int value);
 
 #endif

@@ -6,4 +6,5 @@
 **/*.sh
 **/bbtree/**
 **/data/**
-ZZZ*
+Z*
+z*

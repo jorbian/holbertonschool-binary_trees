@@ -1,123 +1,93 @@
 #include "binary_trees.h"
 
+static avl_t *__bst_insert(avl_t *root, avl_t *new);
+
 /**
- * avl_search - Search an AVL tree and return the node that has the value
- * @node: The tree/subtree/node to search
- * @value: The value to search for in the tree
- * Return: The address of the node that stores the value, NULL if not found
+ * push_to_correct_side - pushes the node to the side it goes on
+ * @root: current root node of the tree
+ * @new: the new node that we're currently adding
+ *
+ * Return: the balance factor with new node.
 */
-
-avl_t *avl_search(avl_t *node, int value)
+static int push_to_correct_side(avl_t *root, avl_t *new)
 {
-	if (node == NULL)
-		return (NULL);
-	else if (node->n == value)
-		return (node);
-	else if (value < node->n)
-		return (avl_search(node->left, value));
+	if (new->n > root->n)
+		root->right = __bst_insert(root->right, new);
 	else
-		return (avl_search(node->right, value));
+		root->left = __bst_insert(root->left, new);
+
+	return (
+		(root != NULL) ? (
+			(binary_tree_height(root->left) - binary_tree_height(root->right))
+		) : 1
+	);
 }
 
 /**
- * rotate_avl - Rotate the AVL tree so that it is balanced again
- * @node: The address of the pointer to the node to rotate around
- * @value: The value that is being saved into the AVL tree
- * Return: void
+ * __bst_insert - inserts a node as a BST then balances it
+ * @root: pointer to the root node of a tree
+ * @new: double pointer to the new node to add
+ *
+ * Return: Root of the tree
  */
-void rotate_avl(avl_t **node, int value)
+static avl_t *__bst_insert(avl_t *root, avl_t *new)
 {
-	int balance;
+	int balance_factor = 0;
 
-	balance = binary_tree_balance(*node);
+	if (!new)
+		return (NULL);
+	if (!root)
+		return (root = new);
 
-	if (balance > 1 && value < (*node)->left->n)
+	if (new->n == root->n)
 	{
-		*node = binary_tree_rotate_right(*node);
-		return;
+		free(new);
+		return (new = root);
 	}
+	new->parent = root;
 
-	if (balance < -1 && value > (*node)->right->n)
-	{
-		*node = binary_tree_rotate_left(*node);
-		return;
-	}
+	balance_factor = push_to_correct_side(root, new);
 
-	if (balance > 1 && value > (*node)->left->n)
+	if (balance_factor > 1)
 	{
-		(*node)->left = binary_tree_rotate_left((*node)->left);
-		*node = binary_tree_rotate_right(*node);
-		return;
+		if (new->n < root->left->n)
+			root = binary_tree_rotate_right(root);
+		else
+		{
+			root->left = binary_tree_rotate_left(root->left);
+			root = binary_tree_rotate_right(root);
+		}
 	}
-
-	if (balance < -1 && value < (*node)->right->n)
+	if (balance_factor < -1)
 	{
-		(*node)->right = binary_tree_rotate_right((*node)->right);
-		*node = binary_tree_rotate_left(*node);
-		return;
+		if (new->n > root->right->n)
+			root = binary_tree_rotate_left(root);
+		else
+		{
+			root->right = binary_tree_rotate_right(root->right);
+			root =  binary_tree_rotate_left(root);
+		}
 	}
+	return (root);
 }
 
 /**
- * avl_inserter - Inserts the value into the AVL tree
- * @tree: The address of the pointer of the root node
- * @value: The value to store inside of the AVL tree
- * Return: The address of the newly created node
- */
-avl_t *avl_inserter(avl_t **tree, int value)
-{
-	avl_t *new_node;
-
-	if (value < (*tree)->n)
-	{
-		if ((*tree)->left == NULL)
-		{
-			(*tree)->left = binary_tree_node(*tree, value);
-			return ((*tree)->left);
-		}
-
-		new_node = avl_inserter(&((*tree)->left), value);
-		if (new_node)
-			rotate_avl(tree, value);
-		return (new_node);
-	}
-
-	if (value > (*tree)->n)
-	{
-		if ((*tree)->right == NULL)
-		{
-			(*tree)->right = binary_tree_node(*tree, value);
-			return ((*tree)->right);
-		}
-
-		new_node = avl_inserter(&((*tree)->right), value);
-		if (new_node)
-			rotate_avl(tree, value);
-		return (new_node);
-	}
-	return (NULL);
-}
-
-/**
- * avl_insert - Add a value to an AVL tree
- * @tree: The address of the pointer to the root node of the AVL tree
- * @value: The value to add to the AVL tree
- * Return: The address of the newly created node, NULL if failure
- */
+* avl_insert - adds a new node to an AVL tree
+* @tree: pointer to the root of a tree
+* @value:value to be stored in the node
+* Return: the new node
+*/
 avl_t *avl_insert(avl_t **tree, int value)
 {
-	avl_t *new_node;
+	avl_t *new, *root;
 
-	if (*tree == NULL)
-	{
-		*tree = binary_tree_node(NULL, value);
-		return (*tree);
-	}
+	new = binary_tree_node(NULL, value);
 
-	new_node = avl_search(*tree, value);
+	if (*tree)
+		root = __bst_insert(*tree, new);
+	else
+		return (*tree = new);
 
-	if (!new_node)
-		new_node = avl_inserter(tree, value);
-
-	return (new_node);
+	*tree = root;
+	return (new);
 }

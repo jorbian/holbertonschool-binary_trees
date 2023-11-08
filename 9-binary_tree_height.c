@@ -8,8 +8,8 @@
 */
 static void measure_branches(const binary_tree_t *t, int *l, int *r)
 {
-	*l = binary_tree_height(t->left) + 1;
-	*r = binary_tree_height(t->right) + 1;
+	*l = t->left ? 1 + binary_tree_height(t->left) : 0;
+	*r = t->right ? 1 + binary_tree_height(t->right) : 0;
 }
 
 /**
@@ -27,8 +27,7 @@ int binary_tree_height(const binary_tree_t *tree)
 
 	measure_branches(tree, &counters[LEFT], &counters[RIGHT]);
 
-	if (counters[LEFT] > counters[RIGHT])
-		return (counters[LEFT]);
-	else
-		return (counters[RIGHT]);
+	return (
+		(counters[LEFT] > counters[RIGHT]) ? counters[LEFT] : counters[RIGHT]
+	);
 }

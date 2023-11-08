@@ -48,26 +48,25 @@ static avl_t *__bst_insert(avl_t *root, avl_t *new)
 
 	balance_factor = push_to_correct_side(root, new);
 
-	if (balance_factor > 1)
+	if (balance_factor > 1 && new->n < root->left->n)
 	{
-		if (new->n < root->left->n)
-			root = binary_tree_rotate_right(root);
-		else
-		{
-			root->left = binary_tree_rotate_left(root->left);
-			root = binary_tree_rotate_right(root);
-		}
+		root = binary_tree_rotate_right(root);
 	}
-	if (balance_factor < -1)
+	if (balance_factor < -1 && new->n > root->right->n)
 	{
-		if (new->n > root->right->n)
-			root = binary_tree_rotate_left(root);
-		else
-		{
-			root->right = binary_tree_rotate_right(root->right);
-			root =  binary_tree_rotate_left(root);
-		}
+		root = binary_tree_rotate_left(root);
 	}
+	if (balance_factor > 1 && new->n > root->left->n)
+	{
+		root->left = binary_tree_rotate_left(root->left);
+		root = binary_tree_rotate_right(root);
+	}
+	if (balance_factor < -1 && new->n < root->right->n)
+	{
+		root->right = binary_tree_rotate_right(root->right);
+		root =  binary_tree_rotate_left(root);
+	}
+
 	return (root);
 }
 

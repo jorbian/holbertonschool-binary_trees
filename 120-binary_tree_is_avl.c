@@ -1,30 +1,46 @@
 #include "binary_trees.h"
 
+static int get_height(const binary_tree_t *tree);
+
 /**
- * get_height - Measures the height of a binary tree.
- * @tree: Pointer to the root node to measure the height.
+ * measure_branches - measure the subbranches of the tree
+ * @tree: node of the root or sub-root of the tree
+ * @counters: pointer to counter array
+*/
+static void measure_branches(const binary_tree_t *tree, int *counters)
+{
+	counters[LEFT] = (
+		(tree->left) ? 1 + get_height(tree->left) : 0
+	);
+	counters[RIGHT] = (
+		(tree->right) ? 1 + get_height(tree->right) : 0
+	);
+}
+
+/**
+ * get_height - Measures the height of binary tree.
+ * @tree: Pointer to root node to measure the height.
  *
  * Return: Tree is NULL, function returns 0, else returns the height.
  */
 static int get_height(const binary_tree_t *tree)
 {
 	int counters[2];
-																										
+
 	if (tree == NULL)
 		return (0);
 
-	counters[LEFT] = get_height(tree->left);
-	counters[RIGHT] = get_height(tree->right);
+	measure_branches(tree, (int *)&counters);
 
-	if (counters[LEFT] > counters[RIGHT])
-		return (counters[LEFT] + 1);
-	else
-		return (counters[RIGHT] + 1);
+	return (
+		MAX(counters[LEFT], counters[RIGHT])
+	);
 }
+
 /**
- * is_balanced - Check if the binary tree is balanced (not more than a
- * difference of 1 in height)
- * @tree: The tree or subtree to check
+ * is_balanced - Check if the binary tree is balanced
+ * @tree: Node of tree to start checking from
+ *
  * Return: true if balanced, false if unbalanced
 */
 static bool is_balanced(const binary_tree_t *tree)
@@ -58,8 +74,7 @@ static int validate_avl(const binary_tree_t *tree, int lowest, int highest)
 		if (tree->n < lowest || tree->n > highest)
 			return (0);
 
-		height[LEFT] = get_height(tree->left);
-		height[RIGHT] = get_height(tree->right);
+		measure_branches(tree, (int *)&height);
 
 		if (abs(height[LEFT] - height[RIGHT]) > 1)
 			return (0);

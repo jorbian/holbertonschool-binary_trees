@@ -18,14 +18,14 @@ size_t binary_tree_size(const binary_tree_t *tree)
 /**
  * binary_tree_is_perfect - checks if a given tree is full and balanced
  * @tree: pointer to the root node of a tree
- *    
+ *
  * Return: the number of nodes with atleast one child
  */
 int binary_tree_is_perfect(const binary_tree_t *tree)
 {
 	int buffer = 0;
 
-	if (tree == NULL)     
+	if (tree == NULL)
 		return (0);
 
 	if (tree->left && tree->right)

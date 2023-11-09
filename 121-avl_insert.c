@@ -1,4 +1,4 @@
-#include "binary_trees.h"
+#include "avl_trees.h"
 
 static avl_t *__bst_insert(avl_t *root, avl_t *new);
 

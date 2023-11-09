@@ -16,7 +16,7 @@ static void measure_branches(const binary_tree_t *tree, int *counters)
 /**
  * binary_tree_height - measures the height of a binary tree
  * @tree: node the tree is being measured from
- * 
+ *
  * Return: Whatever the height is supposed to be.
 */
 int binary_tree_height(const binary_tree_t *tree)

@@ -1,5 +1,8 @@
 #include "binary_trees.h"
 
+#define NEW 0
+#define OLD 1
+
 /**
  * binary_tree_rotate_right - Rotates a binary search tree clockwise
  * @tree: The binary search tree to rotate

@@ -13,11 +13,11 @@ static void measure_branches(const binary_tree_t *tree, int *counters)
 	counters[RIGHT] = NODE_EXISTS(tree->right) + 1;
 }
 
-/*
- * binary_tree_height - Measures the height of binary tree.
- * @tree: Pointer to root node to measure the height.
- *
- * Return: Tree is NULL, function returns 0, else returns the height.
+/**
+ * binary_tree_height - measures the height of a binary tree
+ * @tree: node the tree is being measured from
+ * 
+ * Return: Whatever the height is supposed to be.
 */
 int binary_tree_height(const binary_tree_t *tree)
 {
@@ -26,7 +26,7 @@ int binary_tree_height(const binary_tree_t *tree)
 	if (tree == NULL)
 		return (0);
 
-	measure_branches(tree, (int *)&counters);
+	measure_branches(tree, counters);
 
 	return (
 		MAX(counters[LEFT], counters[RIGHT])

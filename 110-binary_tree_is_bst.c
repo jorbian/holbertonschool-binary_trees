@@ -1,14 +1,14 @@
 #include "binary_trees.h"
 
- /**
-  * __validate_bst - recursive function that does the real work
+/**
+  * validate - recursive function that does the real work
   * @tree: node that's currently being checked
   * @min: current minimum acceptable value
   * @max: current max
   *
   * Return: Whether a branch of the tree was validated.
  */
-static int __validate_bst(binary_tree_t *tree, int min, int max)
+static int __validate_BST(binary_tree_t *tree, int min, int max)
 {
 	if (tree == NULL)
 		return (1);
@@ -17,8 +17,8 @@ static int __validate_bst(binary_tree_t *tree, int min, int max)
 		return (0);
 
 	return (
-		(__validate_bst(tree->left, min, tree->n - 1)) &&
-		(__validate_bst(tree->right, tree->n + 1, max))
+		(__validate_BST(tree->left, min, tree->n - 1)) &&
+		(__validate_BST(tree->right, tree->n + 1, max))
 	);
 }
 
@@ -30,5 +30,5 @@ static int __validate_bst(binary_tree_t *tree, int min, int max)
 */
 int binary_tree_is_bst(binary_tree_t *tree)
 {
-	return (__validate_bst(tree, INT_MIN, INT_MAX));
+	return (__validate_BST(tree, INT_MIN, INT_MAX));
 }
